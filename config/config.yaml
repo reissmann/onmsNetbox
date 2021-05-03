@@ -1,0 +1,8 @@
+---
+
+netbox:
+  token:
+
+opennms:
+  username:
+  password:
