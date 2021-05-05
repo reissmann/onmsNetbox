@@ -113,11 +113,11 @@ def opennms_import(config, output, requisition):
     """
     headers = {'Content-Type': 'application/xml', 'Accept': 'application/xml'}
 
-    requests.post(config['opennms']['fqdn'] + 'opennms/rest/requisitions',
+    requests.post(config['opennms_fqdn'] + '/opennms/rest/requisitions',
                   headers=headers, data=output.encode('utf-8'),
                   auth=(config['opennms']['username'], config['opennms']['password']))
 
-    requests.put(config['opennms']['fqdn'] + 'opennms/rest/requisitions/' + requisition + '/import',
+    requests.put(config['opennms_fqdn'] + '/opennms/rest/requisitions/' + requisition + '/import',
                  auth=(config['opennms']['username'], config['opennms']['password']))
 
 
@@ -164,7 +164,7 @@ def main(netbox, opennms, requisition, snmp, debug, test):
 
     # Get netbox api object
     #
-    nb = pynetbox.api(netbox, config['netbox']['token'])
+    nb = pynetbox.api(config['netbox_fqdn'], config['netbox']['token'])
 
     # Get all devices that we want in OpenNMS from Netbox
     #
