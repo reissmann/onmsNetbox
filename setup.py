@@ -30,7 +30,7 @@ version = open('./VERSION').read().strip()
 setuptools.setup(
     license='MIT',
 
-    name='prisNetbox',
+    name='onmsNetbox',
     version=version,
 
     author='Sven Reissmann',
@@ -38,7 +38,7 @@ setuptools.setup(
 
     url='',
 
-    description='Tools for importing network devices from Netbox into OpenNMS',
+    description='A tool for importing network devices from Netbox into OpenNMS',
     long_description=open('README.md').read(),
     keywords='netbox opennms pris',
 

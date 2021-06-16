@@ -61,3 +61,40 @@ Options:
   -t, --test              Only print the config, but do not add it to OpenNMS.
   --help                  Show this message and exit.
 ````
+
+
+Monitoring SNMP-Interfaces
+--------------------------
+
+To monitor the interface status of our LAG-Interfaces, the following service
+monitor is required in OpenNMS.
+
+    <service name="SNMP-Interface" interval="30000" user-defined="false" status="on">
+        <pattern><![CDATA[^SNMP-Interface-(?<iface>.*)]]></pattern>
+        <parameter key="oid" value=".1.3.6.1.2.1.2.2.1.2.${pattern:iface}"/>
+    </service>
+    <monitor service="SNMP-Interface" class-name="org.opennms.netmgt.poller.monitors.SnmpMonitor"/>
+
+
+License: MIT
+------------
+
+Copyright 2021 Sven Reissmann <sven.reissmann@rz.hs-fulda.de>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
