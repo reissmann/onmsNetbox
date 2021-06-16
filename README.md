@@ -34,7 +34,7 @@ well as an API token for netbox.
 The tool will automatically try to load the configuration file from:
 
    1) /etc/onmsNetbox/config.yaml
-   2) <workingDirectory>/config.yaml
+   2) (projectDirectory)/config.yaml
 
 Within the configuration file, please provide the following information:
 
@@ -44,6 +44,8 @@ Within the configuration file, please provide the following information:
     opnmnms:
       username:
       password:
+
+Further, a template file is needed at the same location as the configuration file.
 
 
 Usage
