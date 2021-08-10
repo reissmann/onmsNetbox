@@ -4,7 +4,7 @@
   <node building="{{ node.building }}" city="Fulda" foreign-id="420000{{ node.id }}" node-label="{{ node.name }}">
     {% if node.primary_ip4 %}
     <interface ip-addr="{{ node.primary_ip4 }}" status="1" snmp-primary="P">
-      <monitored-service service-name="ICMP"/>
+      <monitored-service service-name="60-ICMP"/>
       <monitored-service service-name="SNMP"/>
       <monitored-service service-name="SSH"/>
       {% if node.device_type == 'cisco' %}
@@ -13,17 +13,17 @@
       <monitored-service service-name="Cisco-Fan-Monitor"/>
       {% endif %}
       {% for interfaceID in node.uplinks if interfaceID != "" %}
-      <monitored-service service-name="SNMP-Interface-{{ interfaceID }}"/>
+      <monitored-service service-name="60-SNMP-Interface-{{ interfaceID }}"/>
       {% endfor %}
     </interface>
     {% endif %}
     {% if node.primary_ip6 %}
     <interface ip-addr="{{ node.primary_ip6 }}" status="1" snmp-primary="N">
-      <monitored-service service-name="ICMP"/>
+      <monitored-service service-name="60-ICMP"/>
     </interface>
     {% endif %}
     {% if not node.name.startswith("oob") %}
-    <category name="notifyPolling_NOC"/>
+    {# <category name="notifyPolling_NOC"/> #}
     {% endif %}
     {% if node.device_type == 'cisco' %}
     <category name="viewCisco"/>
