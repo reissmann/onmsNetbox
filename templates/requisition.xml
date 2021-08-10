@@ -5,7 +5,9 @@
     {% if node.primary_ip4 %}
     <interface ip-addr="{{ node.primary_ip4 }}" status="1" snmp-primary="P">
       <monitored-service service-name="60-ICMP"/>
+      {% if node.device_role not in ['spine-switch', 'service-leaf-switch', 'datacenter-leaf-switch', 'campus-leaf-switch'] %}
       <monitored-service service-name="SNMP"/>
+      {% endif %}
       <monitored-service service-name="SSH"/>
       {% if node.device_type == 'cisco' %}
       <monitored-service service-name="Cisco-PowerSupply-Monitor"/>
