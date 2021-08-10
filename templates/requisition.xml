@@ -22,15 +22,17 @@
       <monitored-service service-name="60-ICMP"/>
     </interface>
     {% endif %}
-    {% if not node.name.startswith("oob") %}
+    {% if node.device_role != 'oobm-switch' %}
     {# <category name="notifyPolling_NOC"/> #}
     {% endif %}
-    {% if node.device_type == 'cisco' %}
-    <category name="viewCisco"/>
-    <category name="grafanaCisco"/>
-    {% endif %}
+    <category name="{{ node.device_role }}"/>
+    <category name="{{ node.device_type }}"/>
+    <asset name="building" value="{{ node.building }}"/>
     <asset name="longitude" value="{{ node.longitude }}"/>
     <asset name="latitude" value="{{ node.latitude }}"/>
+    <asset name="category" value="{{ node.device_role }}"/>
+    <asset name="serialNumber" value="{{ node.serial_number }}"/>
+    <asset name="assetNumber" value="{{ node.asset_number }}"/>
   </node>
   {% endfor %}
 </model-import>

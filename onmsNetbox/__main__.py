@@ -189,7 +189,10 @@ def main(netbox, opennms, requisition, snmp, debug, test):
                 'primary_ip4': str(device.primary_ip4).split('/')[0] if device.primary_ip4 is not None else None,
                 'primary_ip6': str(device.primary_ip6).split('/')[0] if device.primary_ip6 is not None else None,
                 'uplinks':  get_interface_ids(nb, device.name),
-                'device_type': device.device_type.manufacturer.slug
+                'device_type': device.device_type.manufacturer.slug,
+                'device_role': device.device_role.slug,
+                'serial_number': device.serial,
+                'asset_number': device.asset_tag
             }
             node['latitude'], node['longitude'], node['building'] = get_site(nb, device.site.id)
 
