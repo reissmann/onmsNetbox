@@ -8,7 +8,9 @@
       {% if node.device_role not in ['spine-switch', 'service-leaf-switch', 'datacenter-leaf-switch', 'campus-leaf-switch'] %}
       <monitored-service service-name="SNMP"/>
       {% endif %}
+      {% if node.device_role != 'oobm-switch' %}
       <monitored-service service-name="SSH"/>
+      {% endif %}
       {% if node.device_type == 'cisco' %}
       <monitored-service service-name="Cisco-PowerSupply-Monitor"/>
       <monitored-service service-name="Cisco-Temperature-Monitor"/>
