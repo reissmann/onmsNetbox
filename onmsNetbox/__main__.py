@@ -48,9 +48,15 @@ def get_config(netbox, opennms, requisition, snmp, debug, test):
 
     config = yamlreader.yaml_load(filename, {"loglevel": "error"})
 
-    config['netbox_fqdn'] = netbox
-    config['opennms_fqdn'] = opennms
-    config['requisition'] = requisition
+    if netbox and netbox != '':
+        config['netbox']['fqdn'] = netbox
+
+    if opennms and opennms != '':
+        config['opennms']['fqdn'] = opennms
+
+    if requisition and requisition != '':
+        config['opennms']['requisition'] = requisition
+
     config['snmp'] = snmp
     config['debug'] = debug
     config['test'] = test
@@ -113,11 +119,11 @@ def opennms_import(config, output, requisition):
     """
     headers = {'Content-Type': 'application/xml', 'Accept': 'application/xml'}
 
-    requests.post(config['opennms_fqdn'] + '/opennms/rest/requisitions',
+    requests.post(config['opennms']['fqdn'] + '/opennms/rest/requisitions',
                   headers=headers, data=output.encode('utf-8'),
                   auth=(config['opennms']['username'], config['opennms']['password']))
 
-    requests.put(config['opennms_fqdn'] + '/opennms/rest/requisitions/' + requisition + '/import',
+    requests.put(config['opennms']['fqdn'] + '/opennms/rest/requisitions/' + requisition + '/import',
                  auth=(config['opennms']['username'], config['opennms']['password']))
 
 
@@ -133,12 +139,9 @@ def render_requisition(config, nodelist, requisition):
 
 
 @click.command()
-@click.option('-n', '--netbox', default='https://netbox.rz.hs-fulda.de',
-              help='FQDN to Netbox (default: https://netbox.rz.hs-fulda.de)')
-@click.option('-o', '--opennms', default='https://opennms.rz.hs-fulda.de',
-              help='FQDN of OpenNMS (default: https://opennms.rz.hs-fulda.de)')
-@click.option('-r', '--requisition', default='Netbox',
-              help='Name of the OpenNMS requisition (default: Netbox)')
+@click.option('-n', '--netbox', help='FQDN for Netbox (overwrites config file value)')
+@click.option('-o', '--opennms', help='FQDN for OpenNMS (overwrites config file value)')
+@click.option('-r', '--requisition', help='Name of the OpenNMS requisition (overwrites config file value)')
 @click.option('-s', '--snmp', default=False, is_flag=True,
               help='Output MGMT IPv4 addresses of all devices to add to OpenNMS SNMP configuration')
 @click.option('-d', '--debug', default=False, is_flag=True,
@@ -164,7 +167,7 @@ def main(netbox, opennms, requisition, snmp, debug, test):
 
     # Get netbox api object
     #
-    nb = pynetbox.api(config['netbox_fqdn'], config['netbox']['token'])
+    nb = pynetbox.api(config['netbox']['fqdn'], config['netbox']['token'])
 
     # Get all devices that we want in OpenNMS from Netbox
     #
@@ -198,7 +201,7 @@ def main(netbox, opennms, requisition, snmp, debug, test):
 
             nodelist.append(node)
 
-        render_requisition(config=config, nodelist=nodelist, requisition=requisition)
+        render_requisition(config=config, nodelist=nodelist, requisition=config['opennms']['requisition'])
 
 
 if __name__ == '__main__':

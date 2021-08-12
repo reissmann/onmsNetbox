@@ -1,8 +1,11 @@
 ---
 
 netbox:
+  fqdn: 'http://127.0.0.1'
   token:
 
 opennms:
+  fqdn: 'http://127.0.0.1:8980'
   username:
   password:
+  requisition: 'Netbox'
