@@ -12,9 +12,9 @@
       <monitored-service service-name="SSH"/>
       {% endif %}
       {% if node.device_type == 'cisco' %}
-      <monitored-service service-name="Cisco-PowerSupply-Monitor"/>
-      <monitored-service service-name="Cisco-Temperature-Monitor"/>
-      <monitored-service service-name="Cisco-Fan-Monitor"/>
+      <monitored-service service-name="300-Cisco-PowerSupply-Monitor"/>
+      <monitored-service service-name="300-Cisco-Temperature-Monitor"/>
+      <monitored-service service-name="300-Cisco-Fan-Monitor"/>
       {% endif %}
       {% for interfaceID in node.uplinks if interfaceID != "" %}
       <monitored-service service-name="60-SNMP-Interface-{{ interfaceID }}"/>
